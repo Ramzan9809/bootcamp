@@ -1,6 +1,6 @@
 from django.db import models
 from ckeditor.fields import RichTextField
-
+# from mptt.models import MPTTModel, TreeForeignKey
 
 class OurCourses(models.Model):
     title = models.CharField(max_length=200, verbose_name='Заголовок')
@@ -42,9 +42,22 @@ class Courses(models.Model):
         verbose_name_plural = 'Курсы'
         verbose_name = 'курс'
 
+# ---------
+
+class Reviews(models.Model):
+    name = models.CharField(max_length=100, verbose_name="фио")
+    desc = models.TextField(verbose_name="Описание")
+    rating = models.IntegerField(default=1, verbose_name="Рейтинг")
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Отзывы'
+        verbose_name_plural = 'Отзывы'
+
 class CategoryBook(models.Model):
     title = models.CharField(max_length=100, verbose_name="Название")
-    slug = models.SlugField(unique=True)
 
     def __str__(self):
         return self.title
@@ -59,9 +72,9 @@ class Books(models.Model):
     category = models.ForeignKey(CategoryBook, on_delete=models.CASCADE, verbose_name="категория")
     author = models.CharField(max_length=100, verbose_name="Имя Автора")
     desc = models.TextField(verbose_name="Описание")
+    reviews = models.ForeignKey(Reviews, verbose_name='Отзыв', null=True, blank=True, on_delete=models.CASCADE)
     Page_Count = models.CharField(max_length=100, verbose_name="Название", blank=True, null=True)
     Word_Count = models.CharField(max_length=100,    verbose_name="Название", blank=True, null=True)
-    slug = models.SlugField(unique=True)
 
     def __str__(self):
         return self.title
@@ -69,23 +82,6 @@ class Books(models.Model):
     class Meta:
         verbose_name = 'книга'
         verbose_name_plural = 'Книги'
-
-
-class CoursePage(models.Model):
-    title = models.CharField(max_length=150, verbose_name="Название")
-    image = models.ImageField(upload_to='images/', verbose_name="Фото")
-    count_lections = models.CharField(
-        help_text="12 лекции", max_length=100, verbose_name="Количество лекции")
-    hours = models.CharField(verbose_name="Сколько часов", max_length=20)
-    description = RichTextField()
-
-    def __str__(self):
-        return self.title
-
-    class Meta:
-        verbose_name = 'Курсы'
-        verbose_name_plural = 'Курсы'
-
 
 class SocialLinks(models.Model):
     title = models.CharField(max_length=150, verbose_name="Название соцсети")
@@ -103,6 +99,8 @@ class Instructors(models.Model):
     name = models.CharField(max_length=150, verbose_name="Имя фамилие")
     image = models.ImageField(upload_to='images/', verbose_name="Фото ава")
     position = models.CharField(max_length=100, verbose_name="Должность")
+    social = models.ForeignKey(SocialLinks,null=True, blank=True, verbose_name='Социальные сети', on_delete=models.CASCADE)
+    reviews = models.ForeignKey(Reviews, verbose_name='Отзыв', null=True, blank=True, on_delete=models.CASCADE)
     description = RichTextField()
 
     def __str__(self):
@@ -112,15 +110,18 @@ class Instructors(models.Model):
         verbose_name = 'Инструкторы'
         verbose_name_plural = 'Инструкторы'
 
-
-class Reviews(models.Model):
-    name = models.CharField(max_length=100, verbose_name="фио")
-    desc = models.TextField(verbose_name="Описание")
-    rating = models.IntegerField(default=1, verbose_name="Рейтинг")
+class CoursePage(models.Model):
+    title = models.CharField(max_length=150, verbose_name="Название")
+    image = models.ImageField(upload_to='images/', verbose_name="Фото")
+    count_lections = models.CharField(help_text="12 лекции", max_length=100, verbose_name="Количество лекции")
+    hours = models.CharField(verbose_name="Сколько часов", max_length=20)
+    teacher = models.ForeignKey(Instructors, verbose_name='Инструкторы', null=True, blank=True, on_delete=models.CASCADE)
+    reviews = models.ForeignKey(Reviews, verbose_name='Отзыв', null=True, blank=True, on_delete=models.CASCADE)
+    description = RichTextField()
 
     def __str__(self):
-        return self.name
+        return self.title
 
     class Meta:
-        verbose_name = 'Отзывы'
-        verbose_name_plural = 'Отзывы'
+        verbose_name = 'курсы страница'
+        verbose_name_plural = 'курсы страница'
