@@ -1,12 +1,13 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
 <head>
 <meta charset="utf-8">
 <title>Bootcamp HTML Template | Books</title>
 <!-- Stylesheets -->
-<link href="css/bootstrap.css" rel="stylesheet">
-<link href="css/main.css" rel="stylesheet">
-<link href="css/responsive.css" rel="stylesheet">
+<link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+<link href="{% static 'css/main.css' %}" rel="stylesheet">
+<link href="{% static 'css/responsive.css' %}" rel="stylesheet">
 
 <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
 <link rel="icon" href="images/favicon.png" type="image/x-icon">
@@ -25,8 +26,8 @@
 
 <div class="page-wrapper">
  	
-    <!-- Preloader -->
-    <div class="preloader"></div>
+    {% comment %} <!-- Preloader -->
+    <div class="preloader"></div> {% endcomment %}
  	
     <!-- Main Header-->
     <header class="main-header header-style-one">
@@ -84,11 +85,11 @@
 
 							<div class="navbar-collapse collapse clearfix" id="navbarSupportedContent">
 								<ul class="navigation clearfix">
-									<li class="current"><a href="index-3.html#">Home</a></li>  
-									<li class="dropdown"><a href="index-3.html#">Books</a>
+									<li class="current"><a href="{% url "home" %}">Главная</a></li>  
+									<li class="dropdown"><a href="{% url "bookPage" %}">Книги</a>
                                         <ul>
-                                            <li><a href="books.html">Books</a></li>
-                                            <li><a href="books-detail.html">Book Detail</a></li>
+                                            <li><a href="{% url "bookPage" %}">Книги</a></li>
+                                            <li><a href="{% url "bookDetail" %}">Детальна информация</a></li>
                                         </ul>
                                     </li> 
 									<li class="dropdown"><a href="index-3.html#">Blog</a>
@@ -98,7 +99,7 @@
 											<li><a href="error.html">Not Found / 404</a></li>
                                         </ul>
                                     </li>
-									<li><a href="contact.html">Contact Us</a></li>
+									<li><a href="{% url "contact" %}">Contact Us</a></li>
 								</ul>
 							</div>
 							
@@ -131,7 +132,7 @@
 	<!-- Page Title -->
     <section class="page-title">
         <div class="auto-container">
-			<h1>Books</h1>
+			<h1>Книги</h1>
 			
 			<!-- Search Boxed -->
 			<div class="search-boxed">
@@ -156,7 +157,7 @@
 		<div class="circle-one"></div>
 		<div class="auto-container">
 			<div class="sec-title">
-				<h2>Category</h2>
+				<h2>Категории</h2>
 			</div>
 			
 			<div class="row clearfix">
@@ -172,11 +173,9 @@
 							
 								<!--Tab Btns-->
 								<ul class="tab-btns tab-buttons clearfix">
-									<li data-tab="#prod-html" class="tab-btn active-btn">HTML</li>
-									<li data-tab="#prod-ui" class="tab-btn">UI/ UX</li>
-									<li data-tab="#prod-javascript" class="tab-btn">JavaScript</li>
-									<li data-tab="#prod-coding" class="tab-btn">Coding</li>
-									<li data-tab="#prod-typography" class="tab-btn">Typography</li>
+									{% for cat in category %}
+										<li data-tab="#prod-html" class="tab-btn active-btn">{{ cat.title }}</li>
+									{% endfor %}
 								</ul>
 								
 								<!--Tabs Container-->
@@ -186,261 +185,28 @@
 									<div class="tab active-tab" id="prod-html">
 										<div class="content">
 											<div class="row clearfix">
-												
-												<!-- Book Block -->
-												<div class="book-block col-lg-3 col-md-4 col-sm-12">
-													<div class="inner-box">
-														<figure class="image-box">
-															<img src="images/resource/book-1.jpg" alt="">
-															<!-- Overlay Box -->
-															<div class="overlay-box">
-																<div class="overlay-inner">
-																	<div class="content">
-																		<a href="books-detail.html" class="link"><span class="icon fa fa-link"></span></a>
-																		<a href="images/resource/book-1.jpg" data-fancybox="books" data-caption="" class="link"><span class="icon flaticon-full-screen"></span></a>
+												{% for bk in book %}
+													<div class="book-block col-lg-3 col-md-4 col-sm-12">
+														<div class="inner-box">
+															<figure class="image-box">
+																<img src="images/resource/book-1.jpg" alt="">
+																<!-- Overlay Box -->
+																<div class="overlay-box">
+																	<div class="overlay-inner">
+																		<div class="content">
+																			<a href="{% url "bookDetail" %}" class="link"><span class="icon fa fa-link"></span></a>
+																			<a href="{{ bk.img.url }}" data-fancybox="books" data-caption="" class="link"><span class="icon flaticon-full-screen"></span></a>
+																		</div>
 																	</div>
 																</div>
+															</figure>
+															<div class="lower-box">
+																<h6><a href="{% url "bookDetail" %}">{{ bk.title }}</a></h6>
 															</div>
-														</figure>
-														<div class="lower-box">
-															<h6><a href="books-detail.html">Don’t make me think</a></h6>
 														</div>
 													</div>
-												</div>
-												
-												<!-- Book Block -->
-												<div class="book-block col-lg-3 col-md-4 col-sm-12">
-													<div class="inner-box">
-														<figure class="image-box">
-															<img src="images/resource/book-2.jpg" alt="">
-															<!-- Overlay Box -->
-															<div class="overlay-box">
-																<div class="overlay-inner">
-																	<div class="content">
-																		<a href="books-detail.html" class="link"><span class="icon fa fa-link"></span></a>
-																		<a href="images/resource/book-2.jpg" data-fancybox="books" data-caption="" class="link"><span class="icon flaticon-full-screen"></span></a>
-																	</div>
-																</div>
-															</div>
-														</figure>
-														<div class="lower-box">
-															<h6><a href="books-detail.html">101 Design Methods</a></h6>
-														</div>
-													</div>
-												</div>
-												
-												<!-- Book Block -->
-												<div class="book-block col-lg-3 col-md-4 col-sm-12">
-													<div class="inner-box">
-														<figure class="image-box">
-															<img src="images/resource/book-3.jpg" alt="">
-															<!-- Overlay Box -->
-															<div class="overlay-box">
-																<div class="overlay-inner">
-																	<div class="content">
-																		<a href="books-detail.html" class="link"><span class="icon fa fa-link"></span></a>
-																		<a href="images/resource/book-3.jpg" data-fancybox="books" data-caption="" class="link"><span class="icon flaticon-full-screen"></span></a>
-																	</div>
-																</div>
-															</div>
-														</figure>
-														<div class="lower-box">
-															<h6><a href="books-detail.html">Lean UX</a></h6>
-														</div>
-													</div>
-												</div>
-												
-												<!-- Book Block -->
-												<div class="book-block col-lg-3 col-md-4 col-sm-12">
-													<div class="inner-box">
-														<figure class="image-box">
-															<img src="images/resource/book-4.jpg" alt="">
-															<!-- Overlay Box -->
-															<div class="overlay-box">
-																<div class="overlay-inner">
-																	<div class="content">
-																		<a href="books-detail.html" class="link"><span class="icon fa fa-link"></span></a>
-																		<a href="images/resource/book-4.jpg" data-fancybox="books" data-caption="" class="link"><span class="icon flaticon-full-screen"></span></a>
-																	</div>
-																</div>
-															</div>
-														</figure>
-														<div class="lower-box">
-															<h6><a href="books-detail.html">The Elements of UX</a></h6>
-														</div>
-													</div>
-												</div>
-												
-												<!-- Book Block -->
-												<div class="book-block col-lg-3 col-md-4 col-sm-12">
-													<div class="inner-box">
-														<figure class="image-box">
-															<img src="images/resource/book-5.jpg" alt="">
-															<!-- Overlay Box -->
-															<div class="overlay-box">
-																<div class="overlay-inner">
-																	<div class="content">
-																		<a href="books-detail.html" class="link"><span class="icon fa fa-link"></span></a>
-																		<a href="images/resource/book-5.jpg" data-fancybox="books" data-caption="" class="link"><span class="icon flaticon-full-screen"></span></a>
-																	</div>
-																</div>
-															</div>
-														</figure>
-														<div class="lower-box">
-															<h6><a href="books-detail.html">Designed for Use</a></h6>
-														</div>
-													</div>
-												</div>
-												
-												<!-- Book Block -->
-												<div class="book-block col-lg-3 col-md-4 col-sm-12">
-													<div class="inner-box">
-														<figure class="image-box">
-															<img src="images/resource/book-6.jpg" alt="">
-															<!-- Overlay Box -->
-															<div class="overlay-box">
-																<div class="overlay-inner">
-																	<div class="content">
-																		<a href="books-detail.html" class="link"><span class="icon fa fa-link"></span></a>
-																		<a href="images/resource/book-6.jpg" data-fancybox="books" data-caption="" class="link"><span class="icon flaticon-full-screen"></span></a>
-																	</div>
-																</div>
-															</div>
-														</figure>
-														<div class="lower-box">
-															<h6><a href="books-detail.html">Design of Everyday</a></h6>
-														</div>
-													</div>
-												</div>
-												
-												<!-- Book Block -->
-												<div class="book-block col-lg-3 col-md-4 col-sm-12">
-													<div class="inner-box">
-														<figure class="image-box">
-															<img src="images/resource/book-7.jpg" alt="">
-															<!-- Overlay Box -->
-															<div class="overlay-box">
-																<div class="overlay-inner">
-																	<div class="content">
-																		<a href="books-detail.html" class="link"><span class="icon fa fa-link"></span></a>
-																		<a href="images/resource/book-7.jpg" data-fancybox="books" data-caption="" class="link"><span class="icon flaticon-full-screen"></span></a>
-																	</div>
-																</div>
-															</div>
-														</figure>
-														<div class="lower-box">
-															<h6><a href="books-detail.html">Undercover UX</a></h6>
-														</div>
-													</div>
-												</div>
-												
-												<!-- Book Block -->
-												<div class="book-block col-lg-3 col-md-4 col-sm-12">
-													<div class="inner-box">
-														<figure class="image-box">
-															<img src="images/resource/book-8.jpg" alt="">
-															<!-- Overlay Box -->
-															<div class="overlay-box">
-																<div class="overlay-inner">
-																	<div class="content">
-																		<a href="books-detail.html" class="link"><span class="icon fa fa-link"></span></a>
-																		<a href="images/resource/book-8.jpg" data-fancybox="books" data-caption="" class="link"><span class="icon flaticon-full-screen"></span></a>
-																	</div>
-																</div>
-															</div>
-														</figure>
-														<div class="lower-box">
-															<h6><a href="books-detail.html">Interaction Design</a></h6>
-														</div>
-													</div>
-												</div>
-												
-												<!-- Book Block -->
-												<div class="book-block col-lg-3 col-md-4 col-sm-12">
-													<div class="inner-box">
-														<figure class="image-box">
-															<img src="images/resource/book-1.jpg" alt="">
-															<!-- Overlay Box -->
-															<div class="overlay-box">
-																<div class="overlay-inner">
-																	<div class="content">
-																		<a href="books-detail.html" class="link"><span class="icon fa fa-link"></span></a>
-																		<a href="images/resource/book-1.jpg" data-fancybox="books" data-caption="" class="link"><span class="icon flaticon-full-screen"></span></a>
-																	</div>
-																</div>
-															</div>
-														</figure>
-														<div class="lower-box">
-															<h6><a href="books-detail.html">Don’t make me think</a></h6>
-														</div>
-													</div>
-												</div>
-												
-												<!-- Book Block -->
-												<div class="book-block col-lg-3 col-md-4 col-sm-12">
-													<div class="inner-box">
-														<figure class="image-box">
-															<img src="images/resource/book-2.jpg" alt="">
-															<!-- Overlay Box -->
-															<div class="overlay-box">
-																<div class="overlay-inner">
-																	<div class="content">
-																		<a href="books-detail.html" class="link"><span class="icon fa fa-link"></span></a>
-																		<a href="images/resource/book-2.jpg" data-fancybox="books" data-caption="" class="link"><span class="icon flaticon-full-screen"></span></a>
-																	</div>
-																</div>
-															</div>
-														</figure>
-														<div class="lower-box">
-															<h6><a href="books-detail.html">101 Design Methods</a></h6>
-														</div>
-													</div>
-												</div>
-												
-												<!-- Book Block -->
-												<div class="book-block col-lg-3 col-md-4 col-sm-12">
-													<div class="inner-box">
-														<figure class="image-box">
-															<img src="images/resource/book-3.jpg" alt="">
-															<!-- Overlay Box -->
-															<div class="overlay-box">
-																<div class="overlay-inner">
-																	<div class="content">
-																		<a href="books-detail.html" class="link"><span class="icon fa fa-link"></span></a>
-																		<a href="images/resource/book-3.jpg" data-fancybox="books" data-caption="" class="link"><span class="icon flaticon-full-screen"></span></a>
-																	</div>
-																</div>
-															</div>
-														</figure>
-														<div class="lower-box">
-															<h6><a href="books-detail.html">Lean UX</a></h6>
-														</div>
-													</div>
-												</div>
-												
-												<!-- Book Block -->
-												<div class="book-block col-lg-3 col-md-4 col-sm-12">
-													<div class="inner-box">
-														<figure class="image-box">
-															<img src="images/resource/book-4.jpg" alt="">
-															<!-- Overlay Box -->
-															<div class="overlay-box">
-																<div class="overlay-inner">
-																	<div class="content">
-																		<a href="books-detail.html" class="link"><span class="icon fa fa-link"></span></a>
-																		<a href="images/resource/book-4.jpg" data-fancybox="books" data-caption="" class="link"><span class="icon flaticon-full-screen"></span></a>
-																	</div>
-																</div>
-															</div>
-														</figure>
-														<div class="lower-box">
-															<h6><a href="books-detail.html">The Elements of UX</a></h6>
-														</div>
-													</div>
-												</div>
-												
+												{% endfor %}
 											</div>
-											
 										</div>
 									</div>
 									
@@ -1797,24 +1563,24 @@
 <!--Scroll to top-->
 <div class="scroll-to-top scroll-to-target" data-target="html"><span class="fa fa-arrow-circle-up"></span></div>
 
-<script src="js/jquery.js"></script>
-<script src="js/popper.min.js"></script>
-<script src="js/jquery.scrollTo.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
-<script src="js/jquery.fancybox.js"></script>
-<script src="js/appear.js"></script>
-<script src="js/swiper.min.js"></script>
-<script src="js/element-in-view.js"></script>
-<script src="js/jquery.paroller.min.js"></script>
-<script src="js/parallax.min.js"></script>
-<script src="js/tilt.jquery.min.js"></script>
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/jquery.scrollTo.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.mCustomScrollbar.concat.min.js' %}"></script>
+<script src="{% static 'js/jquery.fancybox.js' %}"></script>
+<script src="{% static 'js/appear.js' %}"></script>
+<script src="{% static 'js/swiper.min.js' %}"></script>
+<script src="{% static 'js/element-in-view.js' %}"></script>
+<script src="{% static 'js/jquery.paroller.min.js' %}"></script>
+<script src="{% static 'js/parallax.min.js' %}"></script>
+<script src="{% static 'js/tilt.jquery.min.js' %}"></script>
 <!--Master Slider-->
-<script src="js/jquery.easing.min.js"></script>
-<script src="js/owl.js"></script>
-<script src="js/wow.js"></script>
-<script src="js/jquery-ui.js"></script>
-<script src="js/script.js"></script>
+<script src="{% static 'js/jquery.easing.min.js' %}"></script>
+<script src="{% static 'js/owl.js' %}"></script>
+<script src="{% static 'js/wow.js' %}"></script>
+<script src="{% static 'js/jquery-ui.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
 
 </body>
 </html>

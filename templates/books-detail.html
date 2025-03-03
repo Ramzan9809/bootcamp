@@ -1,12 +1,13 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
 <head>
 <meta charset="utf-8">
 <title>Bootcamp HTML Template | Books Detail</title>
 <!-- Stylesheets -->
-<link href="css/bootstrap.css" rel="stylesheet">
-<link href="css/main.css" rel="stylesheet">
-<link href="css/responsive.css" rel="stylesheet">
+<link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+<link href="{% static 'css/main.css' %}" rel="stylesheet">
+<link href="{% static 'css/responsive.css' %}" rel="stylesheet">
 
 <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
 <link rel="icon" href="images/favicon.png" type="image/x-icon">
@@ -26,7 +27,7 @@
 <div class="page-wrapper">
  	
     <!-- Preloader -->
-    <div class="preloader"></div>
+    {% comment %} <div class="preloader"></div> {% endcomment %}
  	
     <!-- Main Header-->
     <header class="main-header header-style-one">
@@ -84,11 +85,11 @@
 
 							<div class="navbar-collapse collapse clearfix" id="navbarSupportedContent">
 								<ul class="navigation clearfix">
-									<li class="current"><a href="index-3.html#">Home</a></li>  
-									<li class="dropdown"><a href="index-3.html#">Books</a>
+									<li class="current"><a href="{% url "home" %}">Главная</a></li>  
+									<li class="dropdown"><a href="{% url "bookPage" %}">Книги</a>
                                         <ul>
-                                            <li><a href="books.html">Books</a></li>
-                                            <li><a href="books-detail.html">Book Detail</a></li>
+                                            <li><a href="{% url "bookPage" %}">Книги</a></li>
+                                            <li><a href="{% url "bookDetail" %}">Детальна информация</a></li>
                                         </ul>
                                     </li> 
 									<li class="dropdown"><a href="index-3.html#">Blog</a>
@@ -98,7 +99,7 @@
 											<li><a href="error.html">Not Found / 404</a></li>
                                         </ul>
                                     </li>
-									<li><a href="contact.html">Contact Us</a></li>
+									<li><a href="{% url "contact" %}">Contact Us</a></li>
 								</ul>
 							</div>
 							
@@ -131,14 +132,14 @@
 	<!-- Page Title -->
     <section class="page-title">
         <div class="auto-container">
-			<h1>Book Description</h1>
+			<h1>Детальна информация</h1>
 			
 			<!-- Search Boxed -->
 			<div class="search-boxed">
 				<div class="search-box">
 					<form method="post" action="contact.html">
 						<div class="form-group">
-							<input type="search" name="search-field" value="" placeholder="What do you want to learn?" required>
+							<input type="search" name="search-field" value="" placeholder="Что искали?" required>
 							<button type="submit"><span class="icon fa fa-search"></span></button>
 						</div>
 					</form>
@@ -161,30 +162,28 @@
 				<div class="info-column col-lg-4 col-md-12 col-sm-12">
 					<div class="inner-column">
 						<div class="image">
-							<img src="images/resource/book-18.jpg" alt="" />
+							<img src="{{ book.img.url }}" alt="" />
 						</div>
 						<ul class="book-info">
-							<li>Published Date: <span>20 March 2020</span></li>
-							<li>Downloaded: <span>125 Times</span></li>
+							<li>Дата выхода: <span>20 March 2020</span></li>
+							<li>Обновлена: <span>125 Times</span></li>
 						</ul>
-						<a href="#" class="theme-btn btn-style-three"><span class="txt">Add To Cart <i class="fa fa-angle-right"></i></span></a>
-						<a href="#" class="theme-btn btn-style-two"><span class="txt">Buy Now <i class="fa fa-angle-right"></i></span></a>
+						<a href="#" class="theme-btn btn-style-three"><span class="txt">Добавить в корзину <i class="fa fa-angle-right"></i></span></a>
+						<a href="#" class="theme-btn btn-style-two"><span class="txt">Купить сейчас <i class="fa fa-angle-right"></i></span></a>
 					</div>
 				</div>
 				
 				<!-- Content Section -->
 				<div class="content-column col-lg-8 col-md-12 col-sm-12">
 					<div class="inner-column">
-						<h2>Don’t Make Me Think</h2>
-						<div class="author">By Steve Krug</div>
-						<h4>Description</h4>
-						<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper <br> Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod quis nostrud exerci tation ullamcorper tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
-						<p>mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam,suscipit lobortis nisl ut aliquip ex ea commodo consequat</p>
-						<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper</p>
-						<h5>Book Information</h5>
+						<h2>{{ book.title }}</h2>
+						<div class="author">{{ book.author }}</div>
+						<h4>Описание</h4>
+						<p>{{ book.desc }}</p>						
+						<h5>Дополнительная информация</h5>
 						<ul class="book-info">
-							<li>Page Count: <span>252</span></li>
-							<li>Word Count: <span>49568</span></li>
+							<li>Количество страниц: <span>{{ book.Page_Count }}</span></li>
+							<li>Количество слов: <span>{{ book.Word_Count }}</span></li>
 						</ul>
 					</div>
 				</div>
@@ -308,24 +307,24 @@
 <!--Scroll to top-->
 <div class="scroll-to-top scroll-to-target" data-target="html"><span class="fa fa-arrow-circle-up"></span></div>
 
-<script src="js/jquery.js"></script>
-<script src="js/popper.min.js"></script>
-<script src="js/jquery.scrollTo.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
-<script src="js/jquery.fancybox.js"></script>
-<script src="js/appear.js"></script>
-<script src="js/swiper.min.js"></script>
-<script src="js/element-in-view.js"></script>
-<script src="js/jquery.paroller.min.js"></script>
-<script src="js/parallax.min.js"></script>
-<script src="js/tilt.jquery.min.js"></script>
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/jquery.scrollTo.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.mCustomScrollbar.concat.min.js' %}"></script>
+<script src="{% static 'js/jquery.fancybox.js' %}"></script>
+<script src="{% static 'js/appear.js' %}"></script>
+<script src="{% static 'js/swiper.min.js' %}"></script>
+<script src="{% static 'js/element-in-view.js' %}"></script>
+<script src="{% static 'js/jquery.paroller.min.js' %}"></script>
+<script src="{% static 'js/parallax.min.js' %}"></script>
+<script src="{% static 'js/tilt.jquery.min.js' %}"></script>
 <!--Master Slider-->
-<script src="js/jquery.easing.min.js"></script>
-<script src="js/owl.js"></script>
-<script src="js/wow.js"></script>
-<script src="js/jquery-ui.js"></script>
-<script src="js/script.js"></script>
+<script src="{% static 'js/jquery.easing.min.js' %}"></script>
+<script src="{% static 'js/owl.js' %}"></script>
+<script src="{% static 'js/wow.js' %}"></script>
+<script src="{% static 'js/jquery-ui.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
 
 </body>
 </html>

@@ -69,6 +69,7 @@ class CategoryBook(models.Model):
 
 class Books(models.Model):
     title = models.CharField(max_length=100, verbose_name="Название")
+    img = models.ImageField(upload_to='media/', blank=True)
     category = models.ForeignKey(CategoryBook, on_delete=models.CASCADE, verbose_name="категория")
     author = models.CharField(max_length=100, verbose_name="Имя Автора")
     desc = models.TextField(verbose_name="Описание")
@@ -113,6 +114,7 @@ class Instructors(models.Model):
 class CoursePage(models.Model):
     title = models.CharField(max_length=150, verbose_name="Название")
     image = models.ImageField(upload_to='images/', verbose_name="Фото")
+    price = models.DecimalField(verbose_name="цена", decimal_places=2, max_digits=8, null=True, blank=True)
     count_lections = models.CharField(help_text="12 лекции", max_length=100, verbose_name="Количество лекции")
     hours = models.CharField(verbose_name="Сколько часов", max_length=20)
     teacher = models.ForeignKey(Instructors, verbose_name='Инструкторы', null=True, blank=True, on_delete=models.CASCADE)
