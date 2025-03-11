@@ -21,7 +21,7 @@ def bookPage(request):
         'category': category,
         'book': book,
     }
-    return render(request, 'books.html', context)
+    return render(request, 'page/books.html', context)
 
 def bookDetail(request):
     category = CategoryBook.objects.latest('id')
@@ -30,9 +30,10 @@ def bookDetail(request):
         'category': category,
         'book': book,
     }
-    return render(request, 'books-detail.html', context)
+    return render(request, 'page/books-detail.html', context)
 
 def contact(request):
-    return render(request, 'contact.html')
+    return render(request, 'page/contact.html')
 
-
+def blog(request):
+    return render(request, 'page/blog.html')

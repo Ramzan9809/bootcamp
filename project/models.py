@@ -58,6 +58,7 @@ class Reviews(models.Model):
 
 class CategoryBook(models.Model):
     title = models.CharField(max_length=100, verbose_name="Название")
+    slug = models.SlugField(unique=True, blank=True, null=True)
 
     def __str__(self):
         return self.title
@@ -74,8 +75,9 @@ class Books(models.Model):
     author = models.CharField(max_length=100, verbose_name="Имя Автора")
     desc = models.TextField(verbose_name="Описание")
     reviews = models.ForeignKey(Reviews, verbose_name='Отзыв', null=True, blank=True, on_delete=models.CASCADE)
-    Page_Count = models.CharField(max_length=100, verbose_name="Название", blank=True, null=True)
-    Word_Count = models.CharField(max_length=100,    verbose_name="Название", blank=True, null=True)
+    Page_Count = models.CharField(max_length=100, verbose_name="Количество страниц", blank=True, null=True)
+    Word_Count = models.CharField(max_length=100, verbose_name="Количество слов", blank=True, null=True)
+    slug = models.SlugField(unique=True, blank=True, null=True)
 
     def __str__(self):
         return self.title
