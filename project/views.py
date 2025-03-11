@@ -37,3 +37,12 @@ def contact(request):
 
 def blog(request):
     return render(request, 'page/blog.html')
+
+def courses(request):
+    category = CategoryForCourses.objects.all()
+    courses = Courses.objects.all()
+    context = {
+        'category': category,
+        'courses': courses,
+    }
+    return render(request, 'page/courses.html', context)

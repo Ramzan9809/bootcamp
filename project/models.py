@@ -27,22 +27,7 @@ class CategoryForCourses(models.Model):
         verbose_name = 'категория'
 
 
-class Courses(models.Model):
-    title = models.CharField(max_length=200, verbose_name='Название курса')
-    category = models.ForeignKey(CategoryForCourses, on_delete=models.CASCADE, verbose_name="категории", blank=True, null=True)
-    price = models.CharField(max_length=10, verbose_name='Стоимость')
-    img = models.ImageField(blank=True, upload_to='images/')
-    desc = models.TextField(verbose_name='Описание')
-    but = models.CharField(max_length=50, verbose_name='Название кнопки')
 
-    def __str__(self):
-        return self.title
-
-    class Meta:
-        verbose_name_plural = 'Курсы'
-        verbose_name = 'курс'
-
-# ---------
 
 class Reviews(models.Model):
     name = models.CharField(max_length=100, verbose_name="фио")
@@ -90,6 +75,9 @@ class SocialLinks(models.Model):
     title = models.CharField(max_length=150, verbose_name="Название соцсети")
     link = models.CharField(max_length=255, verbose_name="ссылка")
     image = models.CharField(max_length=255, verbose_name="ссылка на лого")
+    instructor = models.ForeignKey(
+         'Instructors', models.CASCADE, related_name='social_links', 
+         null=True, blank=True)
 
     def __str__(self):
         return self.title
@@ -102,7 +90,7 @@ class Instructors(models.Model):
     name = models.CharField(max_length=150, verbose_name="Имя фамилие")
     image = models.ImageField(upload_to='images/', verbose_name="Фото ава")
     position = models.CharField(max_length=100, verbose_name="Должность")
-    social = models.ForeignKey(SocialLinks,null=True, blank=True, verbose_name='Социальные сети', on_delete=models.CASCADE)
+    social = models.ManyToManyField(SocialLinks,null=True, blank=True, verbose_name='Социальные сети')
     reviews = models.ForeignKey(Reviews, verbose_name='Отзыв', null=True, blank=True, on_delete=models.CASCADE)
     description = RichTextField()
 
@@ -129,3 +117,19 @@ class CoursePage(models.Model):
     class Meta:
         verbose_name = 'курсы страница'
         verbose_name_plural = 'курсы страница'
+
+class Courses(models.Model):
+    title = models.CharField(max_length=200, verbose_name='Название курса')
+    category = models.ForeignKey(CategoryForCourses, on_delete=models.CASCADE, verbose_name="категории", blank=True, null=True)
+    price = models.CharField(max_length=10, verbose_name='Стоимость')
+    instructors = models.ManyToManyField(Instructors, verbose_name='Инструкторы')
+    img = models.ImageField(blank=True, upload_to='images/')
+    desc = models.TextField(verbose_name='Описание')
+    but = models.CharField(max_length=50, verbose_name='Название кнопки')
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name_plural = 'Курсы'
+        verbose_name = 'курс'
