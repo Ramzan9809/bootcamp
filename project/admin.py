@@ -1,7 +1,7 @@
 from django.contrib import admin
 from mptt.admin import DraggableMPTTAdmin
 from .models import (CategoryForCourses, Courses, OurCourses,
-                     Reviews, CategoryBook, CoursePage, Books, SocialLinks, Instructors)
+                     Reviews, CategoryBook, CoursePage, Books, SocialLinks, Instructors, Data)
 
 
 class BooksAdmin(admin.ModelAdmin):
@@ -31,3 +31,4 @@ admin.site.register(Reviews)
 admin.site.register(CoursePage)
 admin.site.register(SocialLinks)
 admin.site.register(Instructors, InstructorsAdmin)
+admin.site.register(Data)

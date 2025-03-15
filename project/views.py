@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import (CategoryForCourses, Courses, OurCourses,
-                     Reviews, CategoryBook, CoursePage, Books, SocialLinks, Instructors)
+                     Reviews, CategoryBook, CoursePage, Books, SocialLinks, Instructors, Data)
 
 
 def index(request):
@@ -46,3 +46,10 @@ def courses(request):
         'courses': courses,
     }
     return render(request, 'page/courses.html', context)
+
+def header(request):
+    data = Data.objects.latest('id')
+    context = {
+        'data': data,
+    }
+    return render(request, 'headerPages.html', context)

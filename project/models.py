@@ -133,3 +133,17 @@ class Courses(models.Model):
     class Meta:
         verbose_name_plural = 'Курсы'
         verbose_name = 'курс'
+
+class Data(models.Model):
+    logo = models.ImageField(blank=True, upload_to='images/', verbose_name='Логотип')
+    phone = models.CharField(help_text='+996 554977013', max_length=20, verbose_name='Номер телефона')
+    email = models.EmailField(help_text='courses_kg@gmail.com', max_length=100, verbose_name='Email')
+
+    def __str__(self):
+        return self.email
+
+    class Meta:
+        verbose_name_plural = 'Данные'
+        verbose_name = 'данные'
+
+
