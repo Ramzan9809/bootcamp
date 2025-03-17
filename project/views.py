@@ -7,8 +7,10 @@ def index(request):
     category = CategoryForCourses.objects.all()
     course = Courses.objects.all()
     ourcourse = OurCourses.objects.latest("id")
+    data = Data.objects.latest('id')
     context = {
         'category': category,
+        'data': data,
         'course': course,
         'ourcourse': ourcourse,
     }
@@ -17,39 +19,46 @@ def index(request):
 def bookPage(request):
     category = CategoryBook.objects.all()
     book = Books.objects.all()
+    data = Data.objects.latest('id')
     context = {
         'category': category,
+        'data': data,
         'book': book,
     }
     return render(request, 'page/books.html', context)
 
 def bookDetail(request):
     category = CategoryBook.objects.latest('id')
+    data = Data.objects.latest('id')
     book = Books.objects.latest('id')
     context = {
         'category': category,
         'book': book,
+        'data': data,
     }
     return render(request, 'page/books-detail.html', context)
 
 def contact(request):
-    return render(request, 'page/contact.html')
-
-def blog(request):
-    return render(request, 'page/blog.html')
-
-def courses(request):
-    category = CategoryForCourses.objects.all()
-    courses = Courses.objects.all()
-    context = {
-        'category': category,
-        'courses': courses,
-    }
-    return render(request, 'page/courses.html', context)
-
-def header(request):
     data = Data.objects.latest('id')
     context = {
         'data': data,
     }
-    return render(request, 'headerPages.html', context)
+    return render(request, 'page/contact.html', context)
+
+def blog(request):
+    data = Data.objects.latest('id')
+    context ={
+        'data': data,
+    }
+    return render(request, 'page/blog.html', context)
+
+def courses(request):
+    category = CategoryForCourses.objects.all()
+    data = Data.objects.latest('id')
+    courses = Courses.objects.all()
+    context = {
+        'category': category,
+        'data': data,
+        'courses': courses,
+    }
+    return render(request, 'page/courses.html', context)

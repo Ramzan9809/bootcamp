@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from ckeditor.fields import RichTextField
 # from mptt.models import MPTTModel, TreeForeignKey
 
@@ -17,16 +18,17 @@ class OurCourses(models.Model):
 
 class CategoryForCourses(models.Model):
     title = models.CharField(max_length=150, verbose_name='Название категории')
-    
+    slug = models.SlugField(unique=True, blank=True, null=True)
 
     def __str__(self):
         return self.title
+    
+    def get_absolute_url(self):
+         return reverse("category_detail", kwargs={"slug": self.slug})
 
     class Meta:
         verbose_name_plural = 'Категории'
         verbose_name = 'категория'
-
-
 
 
 class Reviews(models.Model):
@@ -47,6 +49,9 @@ class CategoryBook(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def get_absolute_url(self):
+         return reverse("category_detail", kwargs={"slug": self.slug})
 
     class Meta:
         verbose_name = 'Категории книг'
@@ -66,6 +71,9 @@ class Books(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def get_absolute_url(self):
+         return reverse("category_detail", kwargs={"slug": self.slug})
 
     class Meta:
         verbose_name = 'книга'
@@ -126,15 +134,20 @@ class Courses(models.Model):
     img = models.ImageField(blank=True, upload_to='images/')
     desc = models.TextField(verbose_name='Описание')
     but = models.CharField(max_length=50, verbose_name='Название кнопки')
+    slug = models.SlugField(unique=True, blank=True, null=True)
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+         return reverse("course_detail", kwargs={"slug": self.slug})
 
     class Meta:
         verbose_name_plural = 'Курсы'
         verbose_name = 'курс'
 
 class Data(models.Model):
+    name = models.CharField(max_length=100, verbose_name="Название сайта", blank=True, null=True)
     logo = models.ImageField(blank=True, upload_to='images/', verbose_name='Логотип')
     phone = models.CharField(help_text='+996 554977013', max_length=20, verbose_name='Номер телефона')
     email = models.EmailField(help_text='courses_kg@gmail.com', max_length=100, verbose_name='Email')

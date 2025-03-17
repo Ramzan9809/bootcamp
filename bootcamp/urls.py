@@ -9,7 +9,7 @@ urlpatterns = [
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('', index, name='home'),
     path('books/', bookPage, name='books'),
-    path('books_detail/', bookDetail, name='bookDetail'),
+    path('books_detail/<slug:slug>/', bookDetail, name='bookDetail'),
     path('contact/', contact, name='contact'),
     path('blog/', blog, name='blog'),
     path('courses/', courses, name='courses'),
