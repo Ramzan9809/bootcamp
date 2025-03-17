@@ -63,7 +63,7 @@
 									<div class="tab active-tab" id="prod-html">
 										<div class="content">
 											<div class="row clearfix">
-												{% for bk in book %}
+												{% for book in book %}
 													<div class="book-block col-lg-3 col-md-4 col-sm-12">
 														<div class="inner-box">
 															<figure class="image-box">
@@ -72,14 +72,14 @@
 																<div class="overlay-box">
 																	<div class="overlay-inner">
 																		<div class="content">
-																			<a href="{% url "bookDetail" slug=book.slug  %}" class="link"><span class="icon fa fa-link"></span></a>
-																			<a href="{{ bk.img.url }}" data-fancybox="books" data-caption="" class="link"><span class="icon flaticon-full-screen"></span></a>
+																			<a href="{{ book.get_absolute_url }}" class="link"><span class="icon fa fa-link"></span></a>
+																			<a href="{{ book.img.url }}" data-fancybox="books" data-caption="" class="link"><span class="icon flaticon-full-screen"></span></a>
 																		</div>
 																	</div>
 																</div>
 															</figure>
 															<div class="lower-box">
-																<h6><a href="{% url "bookDetail" %}">{{ bk.title }}</a></h6>
+																<h6><a href="{{ book.get_absolute_url }}">{{ book.title }}</a></h6>
 															</div>
 														</div>
 													</div>

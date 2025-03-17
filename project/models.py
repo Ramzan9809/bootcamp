@@ -23,8 +23,7 @@ class CategoryForCourses(models.Model):
     def __str__(self):
         return self.title
     
-    def get_absolute_url(self):
-         return reverse("category_detail", kwargs={"slug": self.slug})
+    
 
     class Meta:
         verbose_name_plural = 'Категории'
@@ -73,7 +72,7 @@ class Books(models.Model):
         return self.title
     
     def get_absolute_url(self):
-         return reverse("category_detail", kwargs={"slug": self.slug})
+         return reverse("book_detail", kwargs={"slug": self.slug})
 
     class Meta:
         verbose_name = 'книга'

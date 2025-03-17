@@ -27,14 +27,16 @@ def bookPage(request):
     }
     return render(request, 'page/books.html', context)
 
-def bookDetail(request):
+def bookDetail(request, slug):
     category = CategoryBook.objects.latest('id')
     data = Data.objects.latest('id')
     book = Books.objects.latest('id')
+    slug = slug
     context = {
         'category': category,
         'book': book,
         'data': data,
+        'slug': slug,
     }
     return render(request, 'page/books-detail.html', context)
 
@@ -62,3 +64,16 @@ def courses(request):
         'courses': courses,
     }
     return render(request, 'page/courses.html', context)
+
+def courseDetail(request, slug):
+    category = CategoryForCourses.objects.all()
+    data = Data.objects.latest('id')
+    courses = Courses.objects.all()
+    slug = slug
+    context = {
+        'category': category,
+        'data': data,
+        'courses': courses,
+        'slug': slug,
+    }
+    return render(request, 'page/course_detail.html', context)
