@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from project.views import index, bookPage, bookDetail, contact, blog, courses, courseDetail
+from project.views import index, bookPage, bookDetail, contact, blog, courses, courseDetail, blog_detail
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -12,6 +12,7 @@ urlpatterns = [
     path('books_detail/<slug:slug>/', bookDetail, name='book_detail'),
     path('contact/', contact, name='contact'),
     path('blog/', blog, name='blog'),
+    path('blog/<slug:slug>/', blog_detail, name='blog_detail'),
     path('courses/', courses, name='courses'),
     path('course_detail/<slug:slug>/', courseDetail, name='course_detail'),
 ]

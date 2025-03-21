@@ -159,3 +159,25 @@ class Data(models.Model):
         verbose_name = 'данные'
 
 
+
+class Blog(models.Model):
+     title = models.CharField(max_length=150, verbose_name="Название")
+     image = models.ImageField(upload_to='images/', verbose_name="Фото")   
+     description = RichTextField()
+     reviews = models.ManyToManyField(Reviews, verbose_name="коментарии", blank=True, null=True)
+     cound_reviews = models.IntegerField(default=0, verbose_name='количество комментариев', blank=True, null=True)
+     author = models.CharField(verbose_name="Автор", max_length=100)
+     date_post = models.DateTimeField(auto_now_add=True)
+     slug = models.SlugField(unique=True, blank=True, null=True)
+ 
+     def __str__(self):
+         return self.title
+ 
+     def get_absolute_url(self):
+         return reverse("blog_detail", kwargs={"slug": self.slug})
+ 
+     class Meta:
+         verbose_name = 'Блог'
+         verbose_name_plural = 'Блог'
+ 
+ 

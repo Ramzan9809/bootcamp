@@ -10,7 +10,7 @@
 	<!-- Page Title -->
     <section class="page-title">
         <div class="auto-container">
-			<h1>Blogs Single</h1>
+			<h1>{{blog.title}}</h1>
 			
 			<!-- Search Boxed -->
 			<div class="search-boxed">
@@ -30,9 +30,8 @@
 	
 	<!--Sidebar Page Container-->
     <div class="sidebar-page-container">
-		<div class="patern-layer-one paroller" data-paroller-factor="0.40" data-paroller-factor-lg="0.20" data-paroller-type="foreground" data-paroller-direction="vertical" style="background-image: url(images/icons/icon-1.png)"></div>
-		<div class="patern-layer-two paroller" data-paroller-factor="0.40" data-paroller-factor-lg="-0.20" data-paroller-type="foreground" data-paroller-direction="vertical" style="background-image: url(images/icons/icon-2.png)"></div>
-		<div class="circle-one"></div>
+		<div class="patern-layer-one paroller" data-paroller-factor="0.40" data-paroller-factor-lg="0.20" data-paroller-type="foreground" data-paroller-direction="vertical" style="background-image: url({% static 'images/icons/icon-1.png' %})"></div>
+ 		<div class="patern-layer-two paroller" data-paroller-factor="0.40" data-paroller-factor-lg="-0.20" data-paroller-type="foreground" data-paroller-direction="vertical" style="background-image: url({% static 'images/icons/icon-2.png' %})"></div><div class="circle-one"></div>
 		<div class="circle-two"></div>
     	<div class="auto-container">
         	<div class="row clearfix">
@@ -47,53 +46,19 @@
 							
 								<!-- Sidebar Title -->
 								<div class="sidebar-title">
-									<h5>Recent Posts</h5>
+									<h5>Последние посты</h5>
 								</div>
 								
 								<div class="widget-content">
+									{% for bl in blogs_latest %}
 									<article class="post">
 										<div class="post-inner">
-											<figure class="post-thumb"><a href="blog-detail.html"><img src="images/resource/post-thumb-1.jpg" alt=""></a></figure>
-											<div class="text"><a href="blog-detail.html">Writing a Simple App</a></div>
-											<div class="post-info">By Steve Krug</div>
+											<figure class="post-thumb"><a href="{{bl.get_absolute_url}}"><img src="{{bl.image.url}}" alt=""></a></figure>
+ 											<div class="text"><a href="{{bl.get_absolute_url}}">{{bl.title}}</a></div>
+ 											<div class="post-info">{{bl.author}}</div>
 										</div>
-									</article>
-
-									<article class="post">
-										<div class="post-inner">
-											<figure class="post-thumb"><a href="blog-detail.html"><img src="images/resource/post-thumb-2.jpg" alt=""></a></figure>
-											<div class="text"><a href="blog-detail.html">Writing a Simple App</a></div>
-											<div class="post-info">By Steve Krug</div>
-										</div>
-									</article>
-									
-									<article class="post">
-										<div class="post-inner">
-											<figure class="post-thumb"><a href="blog-detail.html"><img src="images/resource/post-thumb-3.jpg" alt=""></a></figure>
-											<div class="text"><a href="blog-detail.html">Writing a Simple App</a></div>
-											<div class="post-info">By Steve Krug</div>
-										</div>
-									</article>
-								</div>
-							</div>
-							
-							<!-- Popular Tags -->
-							<div class="sidebar-widget popular-tags">
-							
-								<!-- Sidebar Title -->
-								<div class="sidebar-title">
-									<h5>Tags</h5>
-								</div>
-								
-								<div class="widget-content">
-									<a href="#">#Webdesign</a>
-									<a href="#">#Mobileapp</a>
-									<a href="#">#Design</a>
-									<a href="#">#Hack</a>
-									<a href="#">#Webdesign</a>
-									<a href="#">#Hack</a>
-									<a href="#">#Design</a>
-									<a href="#">#Hack</a>
+									</article> 
+									{% endfor %}
 								</div>
 							</div>
 							
@@ -105,26 +70,16 @@
                 <div class="content-side blog-detail-column col-lg-9 col-md-12 col-sm-12">
                 	<div class="blog-detail">
 						<div class="inner-box">
-							<h2>10 Amazing web of demos and <br> developers</h2>
+							<h2>{{blog.title}}</h2>
 							<ul class="author-info">
-								<li>By David Smith</li>
-								<li><span class="theme_color">11 January 2020</span></li>
-								<li>15 Commnets</li>
+								<li>{{blog.author}}</li>
+ 								<li><span class="theme_color">{{blog.date_post}}</span></li>
+								<li>{{blog.cound_reviews}}</li>
 							</ul>
 							<div class="image">
-								<img src="images/resource/news-2.jpg" alt="" />
+								<img src="{{blog.image.url}}" alt="" />
 							</div>
-							<h4>10 amazing web of demos Developers</h4>
-							<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.And meat blessed void a fruit gathered waters.</p>
-							<h4>25 That Prevent Job Seekers From Overcoming Failure</h4>
-							<p>Phasellus enim magna, varius et commodo ut, ultricies vitae velit. Ut nulla tellus, eleifend euismod pellentesque vel, sagittis vel justo. In libero urna, venenatis sit amet ornare non, suscipit nec risus. Sed consequat justo non mauris pretium at tempor justo sodales. Quisque tincidunt laoreet malesuada. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer vitae ante enim. Fusce sed elit est. Suspendisse sit amet mauris in quam pretium faucibus et aliquam odio.</p>
-							<div class="social-box">
-								<span>Share this article on </span>
-								<a href="#" class="fa fa-facebook-square"></a>
-								<a href="#" class="fa fa-twitter-square"></a>
-								<a href="#" class="fa fa-linkedin-square"></a>
-								<a href="#" class="fa fa-github"></a>
-							</div>
+							{{blog.description|safe}}
 						</div>
 						
 						<!-- Post Share Options -->
@@ -146,36 +101,18 @@
 						<!-- Comments Area -->
 						<div class="comments-area">
 							<div class="group-title">
-								<h4>Recent Comments</h4>
+								<h4>Комментарии</h4>
 							</div>
-							
+							{% for blog in blogs %}
 							<div class="comment-box">
 								<div class="comment">
 									<div class="author-thumb"><img src="images/resource/author-12.jpg" alt=""></div>
-									<div class="comment-info clearfix"><strong>Anna Sthesia</strong><div class="comment-time">June 28, 2019</div></div>
-									<div class="text">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.</div>
-									<a class="theme-btn reply-btn" href="#"> Reply</a>
+									<div class="comment-info clearfix"><strong>{{blog.reviews.name}}</strong><div class="comment-time">June 28, 2019</div></div>
+									<div class="text">{{blog.reviews.desc}}</div>
+									<a class="theme-btn reply-btn" href="#">Ответить</a>
 								</div>
 							</div>
-							
-							<div class="comment-box reply-comment">
-								<div class="comment">
-									<div class="author-thumb"><img src="images/resource/author-13.jpg" alt=""></div>
-									<div class="comment-info clearfix"><strong>Paul Molive </strong><div class="comment-time">July 01, 2019</div></div>
-									<div class="text">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal tion of letters, as opposed to using 'Content here</div>
-									<a class="theme-btn reply-btn" href="#"> Reply</a>
-								</div>
-							</div>
-							
-							<div class="comment-box">
-								<div class="comment">
-									<div class="author-thumb"><img src="images/resource/author-14.jpg" alt=""></div>
-									<div class="comment-info clearfix"><strong>Mouna Sthesia </strong><div class="comment-time">June 28, 2019</div></div>
-									<div class="text">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.</div>
-									<a class="theme-btn reply-btn" href="#"> Reply</a>
-								</div>
-							</div>
-							
+							{% endfor %}
 						</div>
 						
 						<!-- Comment Form -->
@@ -232,123 +169,6 @@
 	</section>
 	<!-- End Call To Action Section Two -->
 	
-	<!--Main Footer-->
-    <footer class="main-footer">
-		<!-- Pattern Layer -->
-		<div class="pattern-layer paroller" data-paroller-factor="0.60" data-paroller-factor-lg="0.20" data-paroller-type="foreground" data-paroller-direction="vertical" style="background-image:url(images/icons/icon-1.png)"></div>
-		<div class="pattern-layer-two data-paroller-factor="0.60" data-paroller-factor-lg="0.20" data-paroller-type="foreground" data-paroller-direction="vertical" style="background-image:url(images/icons/icon-3.png)"></div>
-		<div class="auto-container">
-		
-        	<!-- Widgets Section -->
-            <div class="widgets-section">
-            	<div class="row clearfix">
-                	
-                    <!-- Big Column -->
-                    <div class="big-column col-lg-6 col-md-12 col-sm-12">
-                        <div class="row clearfix">
-							
-							<!--Footer Column-->
-                            <div class="footer-column col-lg-7 col-md-6 col-sm-12">
-                                <div class="footer-widget logo-widget">
-									<div class="logo">
-                                    	<a href="index.html"><img src="images/footer-logo.png" alt="" /></a>
-                                    </div>
-									<div class="text">Replenish him third creature and meat blessed void a fruit gathered you’re, they’re two waters own morning gathered greater.</div>
-									<div class="social-box">
-										<a href="#" class="fa fa-facebook"></a>
-										<a href="#" class="fa fa-instagram"></a>
-										<a href="#" class="fa fa-twitter"></a>
-										<a href="#" class="fa fa-google"></a>
-										<a href="#" class="fa fa-pinterest-p"></a>
-									</div>
-									<div class="copyright">Copyright &copy; 2020 AuburnForest</div>
-								</div>
-							</div>
-							
-							<!--Footer Column-->
-                            <div class="footer-column col-lg-5 col-md-6 col-sm-12">
-                                <div class="footer-widget links-widget">
-									<h4>About Us</h4>
-									<ul class="links-widget">
-										<li><a href="#">Afficiates</a></li>
-										<li><a href="#">Partners</a></li>
-										<li><a href="#">Reviews</a></li>
-										<li><a href="#">Blogs</a></li>
-										<li><a href="#">Newsletter</a></li>
-									</ul>
-								</div>
-							</div>
-							
-						</div>
-					</div>
-					
-					<!-- Big Column -->
-                    <div class="big-column col-lg-6 col-md-12 col-sm-12">
-                        <div class="row clearfix">
-							
-							<!--Footer Column-->
-                            <div class="footer-column col-lg-6 col-md-6 col-sm-12">
-                                <div class="footer-widget links-widget">
-									<h4>Resource</h4>
-									<ul class="links-widget">
-										<li><a href="#">Privacy Policy</a></li>
-										<li><a href="#">Support Area</a></li>
-										<li><a href="#">Documentations</a></li>
-										<li><a href="#">How it works</a></li>
-										<li><a href="#">Terms of Policy</a></li>
-									</ul>
-								</div>
-							</div>
-							
-							<!--Footer Column-->
-                            <div class="footer-column col-lg-6 col-md-6 col-sm-12">
-                                <div class="footer-widget links-widget">
-									<h4>Quick Links</h4>
-									<ul class="links-widget">
-										<li><a href="#">home</a></li>
-										<li><a href="#">About us</a></li>
-										<li><a href="#">Features</a></li>
-										<li><a href="#">Pricing</a></li>
-										<li><a href="#">Contact</a></li>
-									</ul>
-								</div>
-							</div>
-						
-						</div>
-					</div>
-					
-				</div>
-			</div>
-			
-		</div>
-	</footer>
 	
-</div>
-<!--End pagewrapper-->
-
-<!--Scroll to top-->
-<div class="scroll-to-top scroll-to-target" data-target="html"><span class="fa fa-arrow-circle-up"></span></div>
-
-<script src="js/jquery.js"></script>
-<script src="js/popper.min.js"></script>
-<script src="js/jquery.scrollTo.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
-<script src="js/jquery.fancybox.js"></script>
-<script src="js/appear.js"></script>
-<script src="js/swiper.min.js"></script>
-<script src="js/element-in-view.js"></script>
-<script src="js/jquery.paroller.min.js"></script>
-<script src="js/parallax.min.js"></script>
-<script src="js/tilt.jquery.min.js"></script>
-<!--Master Slider-->
-<script src="js/jquery.easing.min.js"></script>
-<script src="js/owl.js"></script>
-<script src="js/wow.js"></script>
-<script src="js/jquery-ui.js"></script>
-<script src="js/script.js"></script>
-
-</body>
-</html>
 
 {% endblock content %}
