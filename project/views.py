@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import (CategoryForCourses, Courses, OurCourses, Blog,
+from .models import (CategoryForCourses, Courses, OurCourses, Blog, Comments, ReplyComments,
                      Reviews, CategoryBook, CoursePage, Books, SocialLinks, Instructors, Data)
 
 
@@ -32,6 +32,7 @@ def bookDetail(request, slug):
     data = Data.objects.latest('id')
     book = Books.objects.latest('id')
     slug = slug
+    
     context = {
         'category': category,
         'book': book,
@@ -60,12 +61,18 @@ def blog_detail(request, slug):
     data = Data.objects.latest('id')
     blogs_latest = Blog.objects.all()[:3]
     blog = Blog.objects.get(slug=slug) 
+    slug = slug
+    comments = Comments.objects.all()
+    reply_comments = ReplyComments.objects.all()
     context = {
          'data':data,
          'blog':blog, 
          'blogs_latest':blogs_latest, 
+         'slug': slug,
+         'comments': comments,
+         'reply_comments': reply_comments,
      }
-    return render(request, 'pages/blog-detail.html', context)
+    return render(request, 'page/blog-detail.html', context)
 
 def courses(request):
     category = CategoryForCourses.objects.all()

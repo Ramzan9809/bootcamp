@@ -38,9 +38,9 @@
      <footer class="main-footer style-two">
  		
  		<!-- Pattern Layer Four -->
- 		<div class="pattern-layer-four" style="background-image:url(images/icons/icon-7.png)"></div>
- 		<div class="pattern-layer-five" style="background-image:url(images/icons/icon-8.png)"></div>
- 		<div class="pattern-layer-six" style="background-image:url(images/icons/icon-9.png)"></div>
+ 		<div class="pattern-layer-four" style="background-image:url({% static 'images/icons/icon-7.png' %})"></div>
+ 		<div class="pattern-layer-five" style="background-image:url({% static 'images/icons/icon-8.png' %})"></div>
+ 		<div class="pattern-layer-six" style="background-image:url({% static 'images/icons/icon-9.png' %})"></div>
  		<div class="auto-container">
  		
          	<!-- Widgets Section -->
@@ -72,14 +72,7 @@
  							<!--Footer Column-->
                              <div class="footer-column col-lg-5 col-md-6 col-sm-12">
                                  <div class="footer-widget links-widget">
- 									<h4>About Us</h4>
- 									<ul class="links-widget">
- 										<li><a href="index-3.html#">Afficiates</a></li>
- 										<li><a href="index-3.html#">Partners</a></li>
- 										<li><a href="index-3.html#">Reviews</a></li>
- 										<li><a href="index-3.html#">Blogs</a></li>
- 										<li><a href="index-3.html#">Newsletter</a></li>
- 									</ul>
+ 									<a href="{% url "home" %}"><h4>Главная</h4></a>
  								</div>
  							</div>
  							
@@ -93,28 +86,28 @@
  							<!--Footer Column-->
                              <div class="footer-column col-lg-6 col-md-6 col-sm-12">
                                  <div class="footer-widget links-widget">
- 									<h4>Resource</h4>
- 									<ul class="links-widget">
- 										<li><a href="index-3.html#">Privacy Policy</a></li>
- 										<li><a href="index-3.html#">Support Area</a></li>
- 										<li><a href="index-3.html#">Documentations</a></li>
- 										<li><a href="index-3.html#">How it works</a></li>
- 										<li><a href="index-3.html#">Terms of Policy</a></li>
- 									</ul>
+									<a href="{% url "books" %}"><h4>Книги</h4></a>
  								</div>
  							</div>
  							
+							<!--Footer Column-->
+							<div class="footer-column col-lg-6 col-md-6 col-sm-12">
+								<div class="footer-widget links-widget">
+									<a href="{% url "courses" %}"><h4>Курсы</h4></a>
+								</div>
+							</div>
+
+							<!--Footer Column-->
+							<div class="footer-column col-lg-6 col-md-6 col-sm-12">
+								<div class="footer-widget links-widget">
+									<a href="{% url "blog" %}"><h4>Блог</h4></a>
+								</div>
+							</div>
+
  							<!--Footer Column-->
                              <div class="footer-column col-lg-6 col-md-6 col-sm-12">
                                  <div class="footer-widget links-widget">
- 									<h4>Quick Links</h4>
- 									<ul class="links-widget">
- 										<li><a href="index-3.html#">home</a></li>
- 										<li><a href="index-3.html#">About us</a></li>
- 										<li><a href="index-3.html#">Features</a></li>
- 										<li><a href="index-3.html#">Pricing</a></li>
- 										<li><a href="index-3.html#">Contact</a></li>
- 									</ul>
+									<a href="{% url "contact" %}"><h4>Связаться</h4></a>
  								</div>
  							</div>
  						
@@ -126,7 +119,7 @@
  			
  			<!-- Footer Bottom -->
  			<div class="footer-bottom text-center">
- 				<div class="copyright">Copyright &copy; 2020 AuburnForest</div>
+ 				<div class="copyright">Буткэмп</div>
  			</div>
  			
  		</div>

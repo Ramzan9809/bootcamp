@@ -1,6 +1,6 @@
 from django.contrib import admin
 from mptt.admin import DraggableMPTTAdmin
-from .models import (CategoryForCourses, Courses, OurCourses, Blog,
+from .models import (CategoryForCourses, Courses, OurCourses, Blog, Comments, ReplyComments,
                      Reviews, CategoryBook, CoursePage, Books, SocialLinks, Instructors, Data)
 
 
@@ -35,6 +35,8 @@ class CourseAdmin(admin.ModelAdmin):
  
 admin.site.register(CategoryBook, CategoryBookAdmin)
 admin.site.register(Books, BooksAdmin)
+admin.site.register(Comments)
+admin.site.register(ReplyComments)
 
 admin.site.register(CategoryForCourses, CategoryCoursesAdmin)
 admin.site.register(Courses,CourseAdmin)

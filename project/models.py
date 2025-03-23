@@ -1,7 +1,27 @@
 from django.db import models
 from django.urls import reverse
 from ckeditor.fields import RichTextField
+from django.core.validators import MinValueValidator, MaxValueValidator
 # from mptt.models import MPTTModel, TreeForeignKey
+
+
+class Data(models.Model):
+    name = models.CharField(max_length=100, verbose_name="Название сайта", blank=True, null=True)
+    logo = models.ImageField(blank=True, upload_to='images/', verbose_name='Логотип', null=True)
+    phone = models.CharField(help_text='+996 554977013', max_length=20, verbose_name='Номер телефона')
+    phone2 = models.CharField(help_text='+996 554977013', max_length=20, verbose_name='Номер телефона 2', blank=True, null=True)
+    email = models.EmailField(help_text='courses_kg@gmail.com', max_length=100, verbose_name='Email')
+    email2 = models.EmailField(help_text='courses_kg@gmail.com', max_length=100, verbose_name='Email 2', blank=True, null=True)
+    address = models.CharField(help_text='Пр. Ленина, 30', max_length=100, verbose_name='Адресс', blank=True, null=True)
+    map = models.CharField(max_length=255, verbose_name='Ссылка на карту', blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = 'Данные'
+        verbose_name = 'данные'
+
 
 class OurCourses(models.Model):
     title = models.CharField(max_length=200, verbose_name='Заголовок')
@@ -28,6 +48,59 @@ class CategoryForCourses(models.Model):
     class Meta:
         verbose_name_plural = 'Категории'
         verbose_name = 'категория'
+
+
+class Blog(models.Model):
+     title = models.CharField(max_length=150, verbose_name="Название")
+     image = models.ImageField(upload_to='images/', verbose_name="Фото")   
+     description = RichTextField()
+     cound_comments = models.IntegerField(default=0, verbose_name='количество комментариев', blank=True, null=True)
+     author = models.CharField(verbose_name="Автор", max_length=100)
+     date_post = models.DateTimeField(auto_now_add=True)
+     slug = models.SlugField(unique=True, blank=True, null=True)
+ 
+     def __str__(self):
+         return self.title
+ 
+     def get_absolute_url(self):
+         return reverse("blog_detail", kwargs={"slug": self.slug})
+ 
+     class Meta:
+         verbose_name = 'Блог'
+         verbose_name_plural = 'Блог'
+
+class Comments(models.Model):
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE, related_name='comments', verbose_name="Блог", null=True, blank=True)
+    name = models.CharField(max_length=100, verbose_name="ФИО")
+    email = models.EmailField(help_text='courses_kg@gmail.com', max_length=100, verbose_name='Email', null=True, blank=True)
+    avatar = models.ImageField(upload_to='media/', null=True, blank=True)
+    desc = models.TextField(verbose_name="Описание")
+    date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    rating = models.IntegerField(default=1, verbose_name="Рейтинг", validators=[MinValueValidator(1), MaxValueValidator(5)])
+
+    def __str__(self):
+        return f'{self.name} - {self.blog.title}'
+    
+    class Meta:
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'
+
+class ReplyComments(models.Model):
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE, related_name='reply', verbose_name="Блог")
+    reply = models.ForeignKey(Comments, on_delete=models.CASCADE, related_name='comments', verbose_name='Комментарий')
+    avatar = models.ImageField(upload_to='media/', null=True, blank=True)
+    name = models.CharField(max_length=100, verbose_name="ФИО")
+    email = models.EmailField(help_text='courses_kg@gmail.com', max_length=100, verbose_name='Email', null=True, blank=True)
+    desc = models.TextField(verbose_name="Описание")
+    date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    rating = models.IntegerField(default=1, verbose_name="Рейтинг", validators=[MinValueValidator(1), MaxValueValidator(5)])
+
+    def __str__(self):
+        return f'{self.name} - {self.reply.name} - {self.blog.title}'
+    
+    class Meta:
+        verbose_name = 'Ответный комментарий'
+        verbose_name_plural = 'ответнные комментарии'
 
 
 class Reviews(models.Model):
@@ -145,39 +218,8 @@ class Courses(models.Model):
         verbose_name_plural = 'Курсы'
         verbose_name = 'курс'
 
-class Data(models.Model):
-    name = models.CharField(max_length=100, verbose_name="Название сайта", blank=True, null=True)
-    logo = models.ImageField(blank=True, upload_to='images/', verbose_name='Логотип')
-    phone = models.CharField(help_text='+996 554977013', max_length=20, verbose_name='Номер телефона')
-    email = models.EmailField(help_text='courses_kg@gmail.com', max_length=100, verbose_name='Email')
-
-    def __str__(self):
-        return self.email
-
-    class Meta:
-        verbose_name_plural = 'Данные'
-        verbose_name = 'данные'
 
 
 
-class Blog(models.Model):
-     title = models.CharField(max_length=150, verbose_name="Название")
-     image = models.ImageField(upload_to='images/', verbose_name="Фото")   
-     description = RichTextField()
-     reviews = models.ManyToManyField(Reviews, verbose_name="коментарии", blank=True, null=True)
-     cound_reviews = models.IntegerField(default=0, verbose_name='количество комментариев', blank=True, null=True)
-     author = models.CharField(verbose_name="Автор", max_length=100)
-     date_post = models.DateTimeField(auto_now_add=True)
-     slug = models.SlugField(unique=True, blank=True, null=True)
- 
-     def __str__(self):
-         return self.title
- 
-     def get_absolute_url(self):
-         return reverse("blog_detail", kwargs={"slug": self.slug})
- 
-     class Meta:
-         verbose_name = 'Блог'
-         verbose_name_plural = 'Блог'
  
  

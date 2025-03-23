@@ -12,7 +12,7 @@ urlpatterns = [
     path('books_detail/<slug:slug>/', bookDetail, name='book_detail'),
     path('contact/', contact, name='contact'),
     path('blog/', blog, name='blog'),
-    path('blog/<slug:slug>/', blog_detail, name='blog_detail'),
+    path('blog_detail/<slug:slug>/', blog_detail, name='blog_detail'),
     path('courses/', courses, name='courses'),
     path('course_detail/<slug:slug>/', courseDetail, name='course_detail'),
 ]

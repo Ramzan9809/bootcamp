@@ -100,43 +100,58 @@
 						
 						<!-- Comments Area -->
 						<div class="comments-area">
+
 							<div class="group-title">
 								<h4>Комментарии</h4>
 							</div>
-							{% for blog in blogs %}
+
 							<div class="comment-box">
+								{% for com in comments %}
 								<div class="comment">
-									<div class="author-thumb"><img src="images/resource/author-12.jpg" alt=""></div>
-									<div class="comment-info clearfix"><strong>{{blog.reviews.name}}</strong><div class="comment-time">June 28, 2019</div></div>
-									<div class="text">{{blog.reviews.desc}}</div>
+									<div class="author-thumb"><img src="{{ com.avatar.url }}" alt=""></div>
+									<div class="comment-info clearfix"><strong>{{ com.name }}<span> | {{ com.rating }} звёзд</span></strong><div class="comment-time">{{ com.date }}</div></div>
+									<div class="text">{{ com.desc }}</div>
 									<a class="theme-btn reply-btn" href="#">Ответить</a>
 								</div>
+								{% endfor %}
+
+								{% for reply in reply_comments %}
+								<div class="comment-box reply-comment">
+									<div class="comment">
+										<div class="author-thumb"><img src="{{ reply.avatar.url }}" alt=""></div>
+										<div class="comment-info clearfix"><strong>{{ reply.name }}<span> | {{ reply.rating }} звёзд</span></strong><div class="comment-time">{{ reply.date }}</div></div>
+										<div class="text">{{ reply.desc }}</div>
+										<a class="theme-btn reply-btn" href="#">Ответить</a>
+									</div>
+								</div>
+								{% endfor %}
+							
 							</div>
-							{% endfor %}
+
 						</div>
 						
 						<!-- Comment Form -->
 						<div class="comment-form">
-							<div class="group-title"><h4>Leave Comment</h4></div>
+							<div class="group-title"><h4>Оставьте комментарий</h4></div>
 							
 							<!--Comment Form-->
 							<form method="post" action="blog.html">
 								<div class="row clearfix">
 									
 									<div class="col-lg-6 col-md-6 col-sm-12 form-group">
-										<input type="text" name="username" placeholder="Full Name*" required>
+										<input type="text" name="username" placeholder="ФИО*" required>
 									</div>
 									
 									<div class="col-lg-6 col-md-6 col-sm-12 form-group">
-										<input type="email" name="email" placeholder="Email Address*" required>
+										<input type="email" name="email" placeholder="Email*" required>
 									</div>
 									
 									<div class="col-lg-12 col-md-12 col-sm-12 form-group">
-										<textarea class="" name="message" placeholder="Write your comment..."></textarea>
+										<textarea class="" name="message" placeholder="Оставьте комментарий..."></textarea>
 									</div>
 									
 									<div class="col-lg-12 col-md-12 col-sm-12 form-group">
-										<button class="theme-btn btn-style-three" type="submit" name="submit-form"><span class="txt">Submit Your Comment <i class="fa fa-angle-right"></i></span></button>
+										<button class="theme-btn btn-style-three" type="submit" name="submit-form"><span class="txt">Отправить <i class="fa fa-angle-right"></i></span></button>
 									</div>
 									
 								</div>
