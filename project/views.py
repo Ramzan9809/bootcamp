@@ -1,10 +1,24 @@
-from django.shortcuts import render
-from .models import (CategoryForCourses, Courses, OurCourses, Blog, Comments, ReplyComments,
-                     Reviews, CategoryBook, CoursePage, Books, SocialLinks, Instructors, Data)
+from django.shortcuts import render, redirect
+from .models import (CategoryCourses, Courses, OurCourses, Blog, Comments,
+                      CategoryBook, Books, Instructors, Data)
+from project.forms import ReviewForm
 
+# main
+# -------------------------------
+
+
+def submit_review(request):
+    if request.method == "POST":
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('courses')
+    else:
+        form = ReviewForm()
+    return render(request, 'courses.html', {'form':form})
 
 def index(request):
-    category = CategoryForCourses.objects.all()
+    category = CategoryCourses.objects.all()
     course = Courses.objects.all()
     ourcourse = OurCourses.objects.latest("id")
     data = Data.objects.latest('id')
@@ -16,7 +30,10 @@ def index(request):
     }
     return render(request, 'index.html', context)
 
-def bookPage(request):
+# books
+# -------------------------------
+
+def books(request):
     category = CategoryBook.objects.all()
     book = Books.objects.all()
     data = Data.objects.latest('id')
@@ -27,26 +44,21 @@ def bookPage(request):
     }
     return render(request, 'page/books.html', context)
 
-def bookDetail(request, slug):
+def book_detail(request, slug):
     category = CategoryBook.objects.latest('id')
     data = Data.objects.latest('id')
     book = Books.objects.latest('id')
     slug = slug
-    
     context = {
         'category': category,
         'book': book,
         'data': data,
         'slug': slug,
     }
-    return render(request, 'page/books-detail.html', context)
+    return render(request, 'page/book-detail.html', context)
 
-def contact(request):
-    data = Data.objects.latest('id')
-    context = {
-        'data': data,
-    }
-    return render(request, 'page/contact.html', context)
+# blog
+# -------------------------------
 
 def blog(request):
     data = Data.objects.latest('id')
@@ -63,19 +75,20 @@ def blog_detail(request, slug):
     blog = Blog.objects.get(slug=slug) 
     slug = slug
     comments = Comments.objects.all()
-    reply_comments = ReplyComments.objects.all()
     context = {
          'data':data,
          'blog':blog, 
          'blogs_latest':blogs_latest, 
          'slug': slug,
          'comments': comments,
-         'reply_comments': reply_comments,
      }
     return render(request, 'page/blog-detail.html', context)
 
+# courses
+# -------------------------------
+
 def courses(request):
-    category = CategoryForCourses.objects.all()
+    category = CategoryCourses.objects.all()
     data = Data.objects.latest('id')
     courses = Courses.objects.all()
     context = {
@@ -85,15 +98,28 @@ def courses(request):
     }
     return render(request, 'page/courses.html', context)
 
-def courseDetail(request, slug):
-    category = CategoryForCourses.objects.all()
+
+def course_detail(request, slug):
+    category = CategoryCourses.objects.all()
     data = Data.objects.latest('id')
-    courses = Courses.objects.all()
+    courses = Courses.objects.latest('id')
+    instructors = Instructors.objects.all()
     slug = slug
     context = {
         'category': category,
         'data': data,
         'courses': courses,
         'slug': slug,
+        'instructors': instructors,
     }
     return render(request, 'page/course_detail.html', context)
+
+# contact
+# -------------------------------
+
+def contact(request):
+    data = Data.objects.latest('id')
+    context = {
+        'data': data,
+    }
+    return render(request, 'page/contact.html', context)

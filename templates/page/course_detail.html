@@ -1,92 +1,69 @@
 {% extends "base.html" %}
-
-{% load static %}
-
-{% block content %}
-
-{% include "headerPages.html" %}
-
-	
-	<!-- Page Title -->
-    <section class="page-title">
-        <div class="auto-container">
-			<h1>Детальна информация</h1>
-			
-			<!-- Search Boxed -->
-			<div class="search-boxed">
-				<div class="search-box">
-					<form method="post" action="contact.html">
-						<div class="form-group">
-							<input type="search" name="search-field" value="" placeholder="Что искали?" required>
-							<button type="submit"><span class="icon fa fa-search"></span></button>
-						</div>
-					</form>
-				</div>
-			</div>
-			
-        </div>
-    </section>
-    <!--End Page Title-->
-	
-	<!-- Books Detail Section -->
-	<section class="books-detail-section">
-		<div class="patern-layer-one paroller" data-paroller-factor="0.40" data-paroller-factor-lg="0.20" data-paroller-type="foreground" data-paroller-direction="vertical" style="background-image: url(images/icons/icon-1.png)"></div>
-		<div class="patern-layer-two paroller" data-paroller-factor="0.40" data-paroller-factor-lg="-0.20" data-paroller-type="foreground" data-paroller-direction="vertical" style="background-image: url(images/icons/icon-2.png)"></div>
-		<div class="circle-one"></div>
-		<div class="auto-container">
-			<div class="row clearfix">
-				
-				<!-- Info Section -->
-				<div class="info-column col-lg-4 col-md-12 col-sm-12">
-					<div class="inner-column">
-						<div class="image">
-							<img src="{{ book.img.url }}" alt="" />
-						</div>
-						<ul class="book-info">
-							<li>Дата выхода: <span>20 March 2020</span></li>
-							<li>Обновлена: <span>125 Times</span></li>
-						</ul>
-						<a href="#" class="theme-btn btn-style-three"><span class="txt">Добавить в корзину <i class="fa fa-angle-right"></i></span></a>
-						<a href="#" class="theme-btn btn-style-two"><span class="txt">Купить сейчас <i class="fa fa-angle-right"></i></span></a>
-					</div>
-				</div>
-				
-				<!-- Content Section -->
-				<div class="content-column col-lg-8 col-md-12 col-sm-12">
-					<div class="inner-column">
-						<h2>{{ book.title }}</h2>
-						<div class="author">{{ book.author }}</div>
-						<h4>Описание</h4>
-						<p>{{ book.desc }}</p>						
-						<h5>Дополнительная информация</h5>
-						<ul class="book-info">
-							<li>Количество страниц: <span>{{ book.Page_Count }}</span></li>
-							<li>Количество слов: <span>{{ book.Word_Count }}</span></li>
-						</ul>
-					</div>
-				</div>
-				
-			</div>
-			
-		</div>
-		
-	</section>
-	<!-- End Books Page Section -->
-	
-	<!-- Call To Action Section Two -->
-	<section class="call-to-action-section-two" style="background-image: url(images/background/3.png)">
-		<div class="auto-container">
-			<div class="content">
-				<h2>Ready to get started?</h2>
-				<div class="text">Replenish him third creature and meat blessed void a fruit gathered you’re, they’re two <br> waters own morning gathered greater shall had behold had seed.</div>
-				<div class="buttons-box">
-					<a href="course.html" class="theme-btn btn-style-one"><span class="txt">Get Stared <i class="fa fa-angle-right"></i></span></a>
-					<a href="course.html" class="theme-btn btn-style-two"><span class="txt">All Courses <i class="fa fa-angle-right"></i></span></a>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- End Call To Action Section Two -->
-	
-
-{% endblock content %}
+ 
+ {% load static %}
+ {% block content %}
+     
+ 	{% include "headerPages.html" %}
+ 	<!-- Page Title -->
+     <section class="page-title">
+         <div class="auto-container">
+ 			<h1>{{courses.title}}</h1> 
+ 			
+         </div>
+     </section>
+     <!--End Page Title-->
+ 	
+ 	<!-- Books Detail Section -->
+ 	<section class="books-detail-section">
+ 		<div class="patern-layer-one paroller" data-paroller-factor="0.40" data-paroller-factor-lg="0.20" data-paroller-type="foreground" data-paroller-direction="vertical" style="background-image: url(images/icons/icon-1.png)"></div>
+ 		<div class="patern-layer-two paroller" data-paroller-factor="0.40" data-paroller-factor-lg="-0.20" data-paroller-type="foreground" data-paroller-direction="vertical" style="background-image: url(images/icons/icon-2.png)"></div>
+ 		<div class="circle-one"></div>
+ 		<div class="auto-container">
+ 			<div class="row clearfix">
+ 				
+ 				<!-- Info Section -->
+ 				<div class="info-column col-lg-4 col-md-12 col-sm-12">
+ 					<div class="inner-column">
+                         {% for ins in instructors %}
+ 						<div class="card">
+                             <img src="{{ins.image.url}}" class="card-img-top" alt="...">
+                             <div class="card-body">
+                               <h5 class="card-title">{{ins.name}}</h5>
+                               <p class="card-text">{{ins.position}}</p>
+                               <a href="#" class="btn btn-primary">узнать больше</a>
+                             </div>
+                           </div>
+                           {% endfor %} 
+ 					</div>
+ 				</div>
+ 				
+ 				<!-- Content Section -->
+ 				<div class="content-column col-lg-8 col-md-12 col-sm-12">
+ 					<div class="inner-column">
+ 						<h2>{{courses.title}}</h2>
+ 						<div class="author">{{courses.price}}</div> 
+ 						<p>{{courses.desc|safe}}</p> 
+ 					</div>
+ 				</div>
+ 				
+ 			</div>
+ 			
+ 		</div>
+ 		
+ 	</section>
+ 	<!-- End Books Page Section -->
+ 	
+ 	<!-- Call To Action Section Two -->
+ 	<section class="call-to-action-section-two" style="background-image: url(https://images.unsplash.com/photo-1518066000714-58c45f1a2c0a?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y29zbW9zfGVufDB8fDB8fHww)">
+ 		<div class="auto-container">
+ 			<div class="content">
+ 				<h2>Готовы начать?</h2> 
+ 				<div class="buttons-box">
+ 					<a href="https://t.me/@edzen25" class="theme-btn btn-style-one"><span class="txt">Начать <i class="fa fa-angle-right"></i></span></a>
+ 					<a href="{% url "courses" %}" class="theme-btn btn-style-two"><span class="txt">Все курсы <i class="fa fa-angle-right"></i></span></a>
+ 				</div>
+ 			</div>
+ 		</div>
+ 	</section>
+ 	<!-- End Call To Action Section Two -->
+ {% endblock content %}

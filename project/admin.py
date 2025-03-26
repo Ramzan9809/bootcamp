@@ -1,6 +1,5 @@
 from django.contrib import admin
-from mptt.admin import DraggableMPTTAdmin
-from .models import (CategoryForCourses, Courses, OurCourses, Blog, Comments, ReplyComments,
+from .models import (CategoryCourses, Courses, OurCourses, Blog, Comments,
                      Reviews, CategoryBook, CoursePage, Books, SocialLinks, Instructors, Data)
 
 
@@ -29,16 +28,18 @@ class InstructorsAdmin(admin.ModelAdmin):
      list_display = ['name', 'position']
      inlines = [SocialLinksInline,]
 
+class CommentsAdmin(admin.ModelAdmin):
+     list_display = ['name', 'blog']
+
 class CourseAdmin(admin.ModelAdmin):
      list_display = ['title', 'slug']
      prepopulated_fields = {'slug' :('title',)}
  
 admin.site.register(CategoryBook, CategoryBookAdmin)
 admin.site.register(Books, BooksAdmin)
-admin.site.register(Comments)
-admin.site.register(ReplyComments)
+admin.site.register(Comments, CommentsAdmin)
 
-admin.site.register(CategoryForCourses, CategoryCoursesAdmin)
+admin.site.register(CategoryCourses, CategoryCoursesAdmin)
 admin.site.register(Courses,CourseAdmin)
 admin.site.register(OurCourses)
 admin.site.register(Blog,  BlogAdmin)

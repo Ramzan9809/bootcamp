@@ -36,7 +36,7 @@ class OurCourses(models.Model):
         verbose_name = 'наш курс'
 
 
-class CategoryForCourses(models.Model):
+class CategoryCourses(models.Model):
     title = models.CharField(max_length=150, verbose_name='Название категории')
     slug = models.SlugField(unique=True, blank=True, null=True)
 
@@ -72,6 +72,11 @@ class Blog(models.Model):
 class Comments(models.Model):
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE, related_name='comments', verbose_name="Блог", null=True, blank=True)
     name = models.CharField(max_length=100, verbose_name="ФИО")
+    parent = models.ForeignKey(
+         'self', on_delete=models.CASCADE,
+         related_name='comments', verbose_name="Блог",
+         null=True, blank=True
+     )
     email = models.EmailField(help_text='courses_kg@gmail.com', max_length=100, verbose_name='Email', null=True, blank=True)
     avatar = models.ImageField(upload_to='media/', null=True, blank=True)
     desc = models.TextField(verbose_name="Описание")
@@ -79,28 +84,14 @@ class Comments(models.Model):
     rating = models.IntegerField(default=1, verbose_name="Рейтинг", validators=[MinValueValidator(1), MaxValueValidator(5)])
 
     def __str__(self):
-        return f'{self.name} - {self.blog.title}'
+        return f"{self.name} - ответ на {self.parent.name}" if self.parent else f"{self.name}"
     
+    def get_replies(self):
+         return self.replies.all()
+
     class Meta:
         verbose_name = 'Комментарий'
         verbose_name_plural = 'Комментарии'
-
-class ReplyComments(models.Model):
-    blog = models.ForeignKey(Blog, on_delete=models.CASCADE, related_name='reply', verbose_name="Блог")
-    reply = models.ForeignKey(Comments, on_delete=models.CASCADE, related_name='comments', verbose_name='Комментарий')
-    avatar = models.ImageField(upload_to='media/', null=True, blank=True)
-    name = models.CharField(max_length=100, verbose_name="ФИО")
-    email = models.EmailField(help_text='courses_kg@gmail.com', max_length=100, verbose_name='Email', null=True, blank=True)
-    desc = models.TextField(verbose_name="Описание")
-    date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    rating = models.IntegerField(default=1, verbose_name="Рейтинг", validators=[MinValueValidator(1), MaxValueValidator(5)])
-
-    def __str__(self):
-        return f'{self.name} - {self.reply.name} - {self.blog.title}'
-    
-    class Meta:
-        verbose_name = 'Ответный комментарий'
-        verbose_name_plural = 'ответнные комментарии'
 
 
 class Reviews(models.Model):
@@ -176,6 +167,9 @@ class Instructors(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.position}"
+    
+    def get_absolute_url(self):
+         return reverse("instructors_detail", kwargs={"slug": self.slug})
 
     class Meta:
         verbose_name = 'Инструкторы'
@@ -200,7 +194,7 @@ class CoursePage(models.Model):
 
 class Courses(models.Model):
     title = models.CharField(max_length=200, verbose_name='Название курса')
-    category = models.ForeignKey(CategoryForCourses, on_delete=models.CASCADE, verbose_name="категории", blank=True, null=True)
+    category = models.ForeignKey(CategoryCourses, on_delete=models.CASCADE, verbose_name="категории", blank=True, null=True)
     price = models.CharField(max_length=10, verbose_name='Стоимость')
     instructors = models.ManyToManyField(Instructors, verbose_name='Инструкторы')
     img = models.ImageField(blank=True, upload_to='images/')
@@ -217,9 +211,5 @@ class Courses(models.Model):
     class Meta:
         verbose_name_plural = 'Курсы'
         verbose_name = 'курс'
-
-
-
-
  
  

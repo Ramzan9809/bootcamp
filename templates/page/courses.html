@@ -67,19 +67,19 @@
 													<div class="book-block col-lg-3 col-md-4 col-sm-12">
 														<div class="inner-box">
 															<figure class="image-box">
-																<img src="images/resource/book-1.jpg" alt="">
+																<img src="{{ cours.img.url }}" alt="">
 																<!-- Overlay Box -->
 																<div class="overlay-box">
 																	<div class="overlay-inner">
 																		<div class="content">
-																			<a href="#" class="link"><span class="icon fa fa-link"></span></a>
+																			<a href="{{ cours.get_absolute_url }}" class="link"><span class="icon fa fa-link"></span></a>
 																			<a href="{{ cours.img.url }}" data-fancybox="books" data-caption="" class="link"><span class="icon flaticon-full-screen"></span></a>
 																		</div>
 																	</div>
 																</div>
 															</figure>
 															<div class="lower-box">
-																<h6><a href="{{ courses.get_absolute_url }}">{{ cours.title }}</a></h6>
+																<h6><a href="{{ cours.get_absolute_url }}">{{ cours.title }}</a></h6>
 															</div>
 														</div>
 													</div>
