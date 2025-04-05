@@ -4,16 +4,18 @@ from django.conf import settings
 from django.conf.urls.static import static
 from project.views import (index, blog, books, contact, courses, book_detail, 
                             blog_detail, course_detail, submit_review,
-                            login_view, reg_view, logout_view)
+                            login_view, reg_view, logout_view, profile_view)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', login_view, name='login'),
     path('register/', reg_view, name='register'),
     path('logout/', logout_view, name='logout'),
-    path('ckeditor/', include('ckeditor_uploader.urls')),
+    path("ckeditor5/", include('django_ckeditor_5.urls')),
+    # path("upload/", custom_upload_function, name="custom_upload_file"),
     path('', index, name='home'),
     path('books/', books, name='books'),
     path('book_detail/<slug:slug>/', book_detail, name='book_detail'),
+    path('profile/', profile_view, name='profile'),
     path('contact/', contact, name='contact'),
     path('blog/', blog, name='blog'),
     path('blog_detail/<slug:slug>/', blog_detail, name='blog_detail'),

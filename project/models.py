@@ -1,9 +1,22 @@
 from django.db import models
 from django.urls import reverse
-from ckeditor.fields import RichTextField
+from django_ckeditor_5.fields import CKEditor5Field
+from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinValueValidator, MaxValueValidator
 # from mptt.models import MPTTModel, TreeForeignKey
 
+class CustomUser(AbstractUser):
+    age = models.PositiveIntegerField(null=True, blank=True)
+    address = models.CharField(max_length=255, blank=True)
+    gender_choices = [
+        ('M', 'Мужской'),
+        ('F', 'Женский'),
+    ]
+    gender = models.CharField(max_length=1, choices=gender_choices, blank=True)
+    photo = models.ImageField(upload_to='profile/', blank=True, null=True)
+
+    def __str__(self):
+        return self.username
 
 class Data(models.Model):
     name = models.CharField(max_length=100, verbose_name="Название сайта", blank=True, null=True)
@@ -53,7 +66,7 @@ class CategoryCourses(models.Model):
 class Blog(models.Model):
      title = models.CharField(max_length=150, verbose_name="Название")
      image = models.ImageField(upload_to='images/', verbose_name="Фото")   
-     description = RichTextField()
+     description = CKEditor5Field()
      cound_comments = models.IntegerField(default=0, verbose_name='количество комментариев', blank=True, null=True)
      author = models.CharField(verbose_name="Автор", max_length=100)
      date_post = models.DateTimeField(auto_now_add=True)
@@ -163,7 +176,7 @@ class Instructors(models.Model):
     position = models.CharField(max_length=100, verbose_name="Должность")
     social = models.ManyToManyField(SocialLinks,null=True, blank=True, verbose_name='Социальные сети')
     reviews = models.ForeignKey(Reviews, verbose_name='Отзыв', null=True, blank=True, on_delete=models.CASCADE)
-    description = RichTextField()
+    description = CKEditor5Field()
 
     def __str__(self):
         return f"{self.name} - {self.position}"
@@ -183,7 +196,7 @@ class CoursePage(models.Model):
     hours = models.CharField(verbose_name="Сколько часов", max_length=20)
     teacher = models.ForeignKey(Instructors, verbose_name='Инструкторы', null=True, blank=True, on_delete=models.CASCADE)
     reviews = models.ForeignKey(Reviews, verbose_name='Отзыв', null=True, blank=True, on_delete=models.CASCADE)
-    description = RichTextField()
+    description = CKEditor5Field()
 
     def __str__(self):
         return self.title
